@@ -1,7 +1,25 @@
-'use client';
-
 import Link from 'next/link';
-import { useState } from 'react';
+
+// Generate static params for all possible product slugs
+export async function generateStaticParams() {
+  // Define all possible product slugs for static generation
+  const productSlugs = [
+    'celebright-advanced-skin-brightening-cream',
+    'vitamin-c-serum',
+    'hydrating-face-mask',
+    'anti-aging-night-cream',
+    'gentle-exfoliating-scrub',
+    'premium-foundation',
+    'luxury-lipstick',
+    'designer-dress',
+    'casual-shirt',
+    'formal-blazer'
+  ];
+
+  return productSlugs.map((slug) => ({
+    slug: slug,
+  }));
+}
 
 // Sample product data - in real app, this would come from API/database
 const sampleProduct = {
@@ -64,7 +82,7 @@ const sampleReviews = [
   }
 ];
 
-// Sample recommended products
+// Recommended products data
 const recommendedProducts = [
   {
     id: 2,
@@ -97,10 +115,6 @@ const recommendedProducts = [
 ];
 
 export default function ProductDetailPage({ params }) {
-  const [activeTab, setActiveTab] = useState('description');
-  const [quantity, setQuantity] = useState(1);
-  const [isImageZoomed, setIsImageZoomed] = useState(false);
-
   const product = sampleProduct; // In real app, fetch by params.slug
 
   const renderStars = (rating) => {
@@ -124,15 +138,11 @@ export default function ProductDetailPage({ params }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xs:gap-8 lg:gap-12 xl:gap-16">
             {/* Product Image */}
             <div className="relative order-1 lg:order-1">
-              <div 
-                className={`relative overflow-hidden rounded-lg border-2 border-[#C5A880] shadow-2xl shadow-[#C5A880]/20 transition-all duration-300 ${isImageZoomed ? 'scale-105' : ''}`}
-                onMouseEnter={() => setIsImageZoomed(true)}
-                onMouseLeave={() => setIsImageZoomed(false)}
-              >
+              <div className="relative overflow-hidden rounded-lg border-2 border-[#C5A880] shadow-2xl shadow-[#C5A880]/20">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-64 xs:h-80 sm:h-96 md:h-[450px] lg:h-[500px] xl:h-[600px] object-cover transition-transform duration-300 hover:scale-110"
+                  className="w-full h-64 xs:h-80 sm:h-96 md:h-[450px] lg:h-[500px] xl:h-[600px] object-cover"
                 />
                 {product.discount && (
                   <div className="absolute top-2 xs:top-3 sm:top-4 left-2 xs:left-3 sm:left-4">
@@ -183,19 +193,7 @@ export default function ProductDetailPage({ params }) {
                 <div className="flex items-center space-x-3 xs:space-x-4 mb-6 xs:mb-7 sm:mb-8">
                   <label className="text-white font-medium text-sm xs:text-base">Quantity:</label>
                   <div className="flex items-center border border-gray-600 rounded-lg">
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-3 xs:px-4 py-2 xs:py-3 text-[#C5A880] hover:bg-gray-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-                    >
-                      -
-                    </button>
-                    <span className="px-3 xs:px-4 py-2 xs:py-3 text-white min-w-[50px] text-center">{quantity}</span>
-                    <button
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="px-3 xs:px-4 py-2 xs:py-3 text-[#C5A880] hover:bg-gray-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-                    >
-                      +
-                    </button>
+                    <span className="px-3 xs:px-4 py-2 xs:py-3 text-white min-w-[50px] text-center">1</span>
                   </div>
                 </div>
 
@@ -241,82 +239,26 @@ export default function ProductDetailPage({ params }) {
         <div className="max-w-6xl mx-auto">
           {/* Tab Navigation */}
           <div className="flex flex-wrap border-b border-gray-700 mb-6 xs:mb-8 overflow-x-auto">
-            {[
-              { id: 'description', label: 'Description' },
-              { id: 'ingredients', label: 'Key Ingredients' },
-              { id: 'howToUse', label: 'How to Use' },
-              { id: 'shipping', label: 'Shipping & Returns' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-3 xs:px-4 py-3 xs:py-4 font-medium transition-colors whitespace-nowrap min-h-[48px] text-sm xs:text-base ${
-                  activeTab === tab.id
-                    ? 'text-[#C5A880] border-b-2 border-[#C5A880]'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+            <button className="px-3 xs:px-4 py-3 xs:py-4 font-medium whitespace-nowrap min-h-[48px] text-sm xs:text-base text-[#C5A880] border-b-2 border-[#C5A880]">
+              Description
+            </button>
+            <button className="px-3 xs:px-4 py-3 xs:py-4 font-medium whitespace-nowrap min-h-[48px] text-sm xs:text-base text-gray-400">
+              Key Ingredients
+            </button>
+            <button className="px-3 xs:px-4 py-3 xs:py-4 font-medium whitespace-nowrap min-h-[48px] text-sm xs:text-base text-gray-400">
+              How to Use
+            </button>
+            <button className="px-3 xs:px-4 py-3 xs:py-4 font-medium whitespace-nowrap min-h-[48px] text-sm xs:text-base text-gray-400">
+              Shipping & Returns
+            </button>
           </div>
 
-          {/* Tab Content */}
+          {/* Tab Content - Description */}
           <div className="min-h-[250px] xs:min-h-[300px]">
-            {activeTab === 'description' && (
-              <div>
-                <h3 className="text-xl xs:text-2xl font-serif text-[#C5A880] mb-3 xs:mb-4">Product Description</h3>
-                <p className="text-white leading-relaxed text-sm xs:text-base sm:text-lg">{product.description}</p>
-              </div>
-            )}
-
-            {activeTab === 'ingredients' && (
-              <div>
-                <h3 className="text-xl xs:text-2xl font-serif text-[#C5A880] mb-4 xs:mb-6">Key Ingredients</h3>
-                <ul className="space-y-2 xs:space-y-3">
-                  {product.keyIngredients.map((ingredient, index) => (
-                    <li key={index} className="flex items-start space-x-3">
-                      <span className="text-[#C5A880] text-lg xs:text-xl flex-shrink-0 mt-1">•</span>
-                      <span className="text-white text-sm xs:text-base sm:text-lg leading-relaxed">{ingredient}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {activeTab === 'howToUse' && (
-              <div>
-                <h3 className="text-xl xs:text-2xl font-serif text-[#C5A880] mb-4 xs:mb-6">How to Use</h3>
-                <ol className="space-y-3 xs:space-y-4">
-                  {product.howToUse.map((step, index) => (
-                    <li key={index} className="flex items-start space-x-3 xs:space-x-4">
-                      <span className="bg-[#C5A880] text-black rounded-full w-6 xs:w-8 h-6 xs:h-8 flex items-center justify-center font-bold text-xs xs:text-sm flex-shrink-0 mt-1">
-                        {index + 1}
-                      </span>
-                      <span className="text-white text-sm xs:text-base sm:text-lg leading-relaxed">{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-
-            {activeTab === 'shipping' && (
-              <div>
-                <h3 className="text-xl xs:text-2xl font-serif text-[#C5A880] mb-4 xs:mb-6">Shipping & Returns</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 xs:gap-6">
-                  <div>
-                    <h4 className="text-[#C5A880] font-semibold mb-2 text-sm xs:text-base">Shipping Information</h4>
-                    <p className="text-white mb-2 text-sm xs:text-base">{product.shippingInfo.freeShipping}</p>
-                    <p className="text-white text-sm xs:text-base">Delivery Time: {product.shippingInfo.deliveryTime}</p>
-                  </div>
-                  <div>
-                    <h4 className="text-[#C5A880] font-semibold mb-2 text-sm xs:text-base">Returns & Warranty</h4>
-                    <p className="text-white mb-2 text-sm xs:text-base">{product.shippingInfo.returns}</p>
-                    <p className="text-white text-sm xs:text-base">{product.shippingInfo.warranty}</p>
-                  </div>
-                </div>
-              </div>
-            )}
+            <div>
+              <h3 className="text-xl xs:text-2xl font-serif text-[#C5A880] mb-3 xs:mb-4">Product Description</h3>
+              <p className="text-white leading-relaxed text-sm xs:text-base sm:text-lg">{product.description}</p>
+            </div>
           </div>
         </div>
       </section>

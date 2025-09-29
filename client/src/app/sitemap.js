@@ -1,5 +1,7 @@
+export const dynamic = 'force-static'
+
 export default function sitemap() {
-  const baseUrl = 'https://tarikaziz.com'
+  const baseUrl = 'http://hoorberryindia.com'
   
   // Static pages
   const staticPages = [
