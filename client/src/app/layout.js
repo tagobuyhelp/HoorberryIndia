@@ -1,5 +1,6 @@
 import { Playfair_Display, Open_Sans } from "next/font/google";
 import "./globals.css";
+import "../styles/animations.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";

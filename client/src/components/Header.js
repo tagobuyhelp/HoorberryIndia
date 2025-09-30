@@ -3,12 +3,70 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import CartModal from "./CartModal";
+import CartMobileMenu from "./CartMobileMenu";
+import AccountModal from "./AccountModal";
+import AccountMobileMenu from "./AccountMobileMenu";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isCartMobileMenuOpen, setIsCartMobileMenuOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const [isAccountMobileMenuOpen, setIsAccountMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const openCartModal = () => {
+    setIsCartModalOpen(true);
+  };
+
+  const closeCartModal = () => {
+    setIsCartModalOpen(false);
+  };
+
+  const openCartMobileMenu = () => {
+    setIsCartMobileMenuOpen(true);
+  };
+
+  const closeCartMobileMenu = () => {
+    setIsCartMobileMenuOpen(false);
+  };
+
+  const openAccountModal = () => {
+    setIsAccountModalOpen(true);
+  };
+
+  const closeAccountModal = () => {
+    setIsAccountModalOpen(false);
+  };
+
+  const openAccountMobileMenu = () => {
+    setIsAccountMobileMenuOpen(true);
+  };
+
+  const closeAccountMobileMenu = () => {
+    setIsAccountMobileMenuOpen(false);
+  };
+
+  const handleCartClick = () => {
+    // Show desktop modal on large screens, mobile menu on small screens
+    if (window.innerWidth >= 1024) {
+      openCartModal();
+    } else {
+      openCartMobileMenu();
+    }
+  };
+
+  const handleAccountClick = () => {
+    // Show desktop modal on large screens, mobile menu on small screens
+    if (window.innerWidth >= 1024) {
+      openAccountModal();
+    } else {
+      openAccountMobileMenu();
+    }
   };
 
   const navigationItems = [
@@ -69,13 +127,20 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-black border-b border-gray-800 backdrop-blur-sm">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+    <>
+    <header className="sticky top-0 z-40 bg-black border-b border-gray-800 backdrop-blur-sm">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="text-2xl lg:text-3xl font-serif font-bold text-gold">
+            <Link href="/" className="flex items-center space-x-2 group">
+              <div className="relative">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-gold group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#C5A880] to-[#D4B896] rounded-full opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+              </div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold bg-gradient-to-r from-[#C5A880] to-[#D4B896] bg-clip-text text-transparent group-hover:from-white group-hover:to-gray-200 transition-all duration-300">
                 Hoorberry
               </div>
             </Link>
@@ -98,14 +163,14 @@ export default function Header() {
           </nav>
 
           {/* Right Icons */}
-          <div className="flex items-center space-x-4">
-            {/* Search Icon */}
+          <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
+            {/* Search Icon - Hidden on very small screens */}
             <button
-              className="p-2 text-white hover:text-gold transition-colors duration-300"
+              className="hidden xs:block p-2 sm:p-2.5 text-white hover:text-gold transition-all duration-300 rounded-lg hover:bg-gray-800 group relative"
               aria-label="Search"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -117,15 +182,17 @@ export default function Header() {
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#C5A880] to-[#D4B896] rounded-lg opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
             </button>
 
             {/* Cart Icon */}
             <button
-              className="p-2 text-white hover:text-gold transition-colors duration-300 relative"
+              onClick={handleCartClick}
+              className="p-2 sm:p-2.5 text-white hover:text-gold transition-all duration-300 relative rounded-lg hover:bg-gray-800 group"
               aria-label="Shopping Cart"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -138,18 +205,20 @@ export default function Header() {
                 />
               </svg>
               {/* Cart Badge */}
-              <span className="absolute -top-1 -right-1 bg-gold text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                0
+              <span className="absolute -top-1 -right-1 bg-gradient-to-r from-[#C5A880] to-[#D4B896] text-black text-xs rounded-full h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center font-bold text-[10px] sm:text-xs shadow-lg animate-pulse">
+                3
               </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#C5A880] to-[#D4B896] rounded-lg opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
             </button>
 
             {/* Account Icon */}
             <button
-              className="p-2 text-white hover:text-gold transition-colors duration-300"
+              onClick={handleAccountClick}
+              className="p-2 sm:p-2.5 text-white hover:text-gold transition-all duration-300 rounded-lg hover:bg-gray-800 group relative"
               aria-label="Account"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -161,13 +230,14 @@ export default function Header() {
                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                 />
               </svg>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#C5A880] to-[#D4B896] rounded-lg opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
             </button>
 
             {/* Mobile menu button */}
             <div className="lg:hidden">
               <button
                 type="button"
-                className="p-2 text-white hover:text-gold transition-colors duration-300"
+                className="p-2 sm:p-2.5 text-white hover:text-gold transition-all duration-300 rounded-lg hover:bg-gray-800 group relative"
                 aria-controls="mobile-menu"
                 aria-expanded={isMobileMenuOpen}
                 onClick={toggleMobileMenu}
@@ -175,35 +245,38 @@ export default function Header() {
                 <span className="sr-only">
                   {isMobileMenuOpen ? "Close main menu" : "Open main menu"}
                 </span>
-                {!isMobileMenuOpen ? (
-                  <svg
-                    className="block h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="block h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                )}
+                <div className="relative">
+                  {!isMobileMenuOpen ? (
+                    <svg
+                      className="block h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform duration-300"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="block h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform duration-300 rotate-90"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  )}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#C5A880] to-[#D4B896] rounded-lg opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               </button>
             </div>
           </div>
@@ -212,28 +285,52 @@ export default function Header() {
 
       {/* Mobile menu */}
       <div
-        className={`lg:hidden ${isMobileMenuOpen ? "block" : "hidden"}`}
+        className={`lg:hidden transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen 
+            ? "max-h-96 opacity-100" 
+            : "max-h-0 opacity-0 overflow-hidden"
+        }`}
         id="mobile-menu"
       >
-        <div className="px-4 pt-2 pb-3 space-y-1 bg-black border-t border-gray-800">
+        <div className="px-4 sm:px-6 pt-3 pb-4 space-y-2 bg-gradient-to-b from-black to-gray-900 border-t border-gray-800 shadow-lg">
           {/* Mobile Navigation */}
-          <nav className="space-y-1">
-            {navigationItems.map((item) => (
+          <nav className="space-y-2">
+            {navigationItems.map((item, index) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="flex items-center space-x-3 px-3 py-2 text-white hover:text-gold transition-colors duration-300 font-medium group"
-                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center space-x-3 px-4 py-3 text-white hover:text-gold transition-all duration-300 font-medium group rounded-xl hover:bg-gradient-to-r hover:from-gray-800 hover:to-gray-700 border border-transparent hover:border-[#C5A880]/20 transform hover:scale-[1.02]"
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                  animation: isMobileMenuOpen ? 'slideInFromLeft 0.3s ease-out forwards' : 'none'
+                }}
               >
-                <span className="text-gold group-hover:text-white transition-colors duration-300">
+                <span className="text-gold group-hover:text-white transition-colors duration-300 group-hover:scale-110 transform">
                   {item.icon}
                 </span>
-                <span>{item.name}</span>
+                <span className="font-semibold">{item.name}</span>
+                <svg className="w-4 h-4 ml-auto text-gray-400 group-hover:text-gold transition-all duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             ))}
           </nav>
         </div>
       </div>
+
     </header>
+
+    {/* Cart Modal for Desktop - Outside header to avoid overflow issues */}
+    <CartModal isOpen={isCartModalOpen} onClose={closeCartModal} />
+
+    {/* Cart Mobile Menu - Outside header to avoid overflow issues */}
+    <CartMobileMenu isOpen={isCartMobileMenuOpen} onClose={closeCartMobileMenu} />
+
+    {/* Account Modal for Desktop - Outside header to avoid overflow issues */}
+    <AccountModal isOpen={isAccountModalOpen} onClose={closeAccountModal} />
+
+    {/* Account Mobile Menu - Outside header to avoid overflow issues */}
+    <AccountMobileMenu isOpen={isAccountMobileMenuOpen} onClose={closeAccountMobileMenu} />
+  </>
   );
 }
