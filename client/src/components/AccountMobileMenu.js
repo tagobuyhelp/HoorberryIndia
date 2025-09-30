@@ -61,8 +61,11 @@ const AccountMobileMenu = ({ isOpen, onClose }) => {
       <div className="fixed right-0 top-0 h-full w-full max-w-sm bg-black border-l border-[#C5A880] z-[70] transform transition-transform duration-300 ease-in-out overflow-hidden lg:hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900">
-          <h2 className="text-[#C5A880] font-serif text-lg font-semibold">
-            {isLoggedIn ? "My Account" : "Account"}
+          <h2 className="text-[#C5A880] font-serif text-lg font-semibold flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>{isLoggedIn ? "My Account" : "Account"}</span>
           </h2>
           <button
             onClick={onClose}
@@ -198,35 +201,45 @@ const AccountMobileMenu = ({ isOpen, onClose }) => {
 
               {/* Login Form */}
               {activeTab === "login" && (
-                <form onSubmit={handleLogin} className="space-y-5">
+                <form onSubmit={handleLogin} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                      placeholder="Enter your email"
-                      required
-                    />
+                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Email Address</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                        </svg>
+                      </span>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                        placeholder="Enter your email"
+                        required
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                      placeholder="Enter your password"
-                      required
-                    />
+                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                      </span>
+                      <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                        placeholder="Enter your password"
+                        required
+                      />
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -241,105 +254,126 @@ const AccountMobileMenu = ({ isOpen, onClose }) => {
 
                   <button
                     type="submit"
-                    className="w-full bg-[#C5A880] text-black py-3 px-4 rounded-lg font-medium hover:bg-[#B8975C] transition-colors duration-200"
+                    className="w-full bg-[#C5A880] text-black py-3 px-4 rounded-lg font-medium hover:bg-[#B8975C] transition-colors duration-200 flex items-center justify-center gap-2"
                   >
-                    Login
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                    <span>Login</span>
                   </button>
                 </form>
               )}
 
               {/* Signup Form */}
               {activeTab === "signup" && (
-                <form onSubmit={handleSignup} className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4">
+                <form onSubmit={handleSignup} className="space-y-3">
+                  <div className="grid grid-cols-1 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        First Name
-                      </label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1.5">First Name</label>
+                      <div className="relative">
+                        <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        </span>
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                          className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                          placeholder="First name"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-1.5">Last Name</label>
+                      <div className="relative">
+                        <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        </span>
+                        <input
+                          type="text"
+                          name="lastName"
+                          value={formData.lastName}
+                          onChange={handleInputChange}
+                          className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                          placeholder="Last name"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Email Address</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>
+                      </span>
                       <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
+                        type="email"
+                        name="email"
+                        value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                        placeholder="First name"
+                        className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                        placeholder="Enter your email"
                         required
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Last Name
-                      </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Phone Number</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.25 3 9V7a2 2 0 012-2z" /></svg>
+                      </span>
                       <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                        placeholder="Last name"
+                        className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                        placeholder="Enter your phone number"
                         required
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                      placeholder="Enter your email"
-                      required
-                    />
+                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                      </span>
+                      <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                        placeholder="Create a password"
+                        required
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                      placeholder="Enter your phone number"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                      placeholder="Create a password"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Confirm Password
-                    </label>
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
-                      placeholder="Confirm your password"
-                      required
-                    />
+                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Confirm Password</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                      </span>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C5A880] transition-colors duration-200"
+                        placeholder="Confirm your password"
+                        required
+                      />
+                    </div>
                   </div>
 
                   <div className="flex items-start">
@@ -351,9 +385,12 @@ const AccountMobileMenu = ({ isOpen, onClose }) => {
 
                   <button
                     type="submit"
-                    className="w-full bg-[#C5A880] text-black py-3 px-4 rounded-lg font-medium hover:bg-[#B8975C] transition-colors duration-200"
+                    className="w-full bg-[#C5A880] text-black py-3 px-4 rounded-lg font-medium hover:bg-[#B8975C] transition-colors duration-200 flex items-center justify-center gap-2"
                   >
-                    Create Account
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Create Account</span>
                   </button>
                 </form>
               )}

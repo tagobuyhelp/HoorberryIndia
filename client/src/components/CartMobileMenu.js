@@ -100,7 +100,15 @@ const CartMobileMenu = ({ isOpen, onClose }) => {
       <div className="fixed right-0 top-0 h-full w-full max-w-sm bg-black border-l border-[#C5A880] z-[70] transform transition-transform duration-300 ease-in-out overflow-hidden lg:hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900">
-          <h2 className="text-[#C5A880] font-serif text-lg font-semibold">Your Cart</h2>
+          <h2 className="text-[#C5A880] font-serif text-lg font-semibold flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#C5A880]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 4h-2l-1 2H2v2h2l3.6 7.59-1.35 2.44A2 2 0 006 20h12v-2H7.42a.5.5 0 01-.44-.73L8.1 15h7.45a2 2 0 001.81-1.19L20 8H7.42l-.94-2H21V4H7z"/>
+            </svg>
+            Your Cart
+            {cartItems.length > 0 && (
+              <span className="ml-2 bg-[#C5A880] text-black text-xs px-2 py-0.5 rounded-full font-medium">{cartItems.length}</span>
+            )}
+          </h2>
           <button
             onClick={onClose}
             className="p-2 text-gray-400 hover:text-[#C5A880] transition-colors duration-200 -mr-2"
@@ -118,14 +126,21 @@ const CartMobileMenu = ({ isOpen, onClose }) => {
           <div className="flex-1 overflow-y-auto">
             {cartItems.length === 0 ? (
               <div className="text-center py-16 px-4">
-                <div className="text-5xl mb-4">🛒</div>
+                <div className="mb-4 flex justify-center">
+                  <svg className="w-12 h-12 text-[#C5A880]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M7 4h-2l-1 2H2v2h2l3.6 7.59-1.35 2.44A2 2 0 006 20h12v-2H7.42a.5.5 0 01-.44-.73L8.1 15h7.45a2 2 0 001.81-1.19L20 8H7.42l-.94-2H21V4H7z"/>
+                  </svg>
+                </div>
                 <h3 className="text-xl font-semibold text-white mb-3">Your cart is empty</h3>
                 <p className="text-gray-400 text-sm mb-6">Add some luxury items to get started</p>
                 <button 
                   onClick={onClose}
-                  className="bg-[#C5A880] text-black px-6 py-3 rounded-lg font-semibold hover:bg-black hover:text-[#C5A880] hover:border hover:border-[#C5A880] transition-all duration-200"
+                  className="bg-[#C5A880] text-black px-6 py-3 rounded-lg font-semibold hover:bg-black hover:text-[#C5A880] hover:border hover:border-[#C5A880] transition-all duration-200 flex items-center justify-center gap-2"
                 >
-                  Continue Shopping
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14" />
+                  </svg>
+                  <span>Continue Shopping</span>
                 </button>
               </div>
             ) : (
@@ -155,8 +170,11 @@ const CartMobileMenu = ({ isOpen, onClose }) => {
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className="px-2 py-1 text-[#C5A880] hover:bg-[#C5A880] hover:text-black transition-colors duration-200 text-sm min-w-[32px] min-h-[32px] flex items-center justify-center"
+                            aria-label="Decrease quantity"
                           >
-                            −
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                              <rect x="4" y="9" width="12" height="2" />
+                            </svg>
                           </button>
                           <span className="px-3 py-1 text-white text-sm min-w-[2.5rem] text-center">
                             {item.quantity}
@@ -164,8 +182,12 @@ const CartMobileMenu = ({ isOpen, onClose }) => {
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="px-2 py-1 text-[#C5A880] hover:bg-[#C5A880] hover:text-black transition-colors duration-200 text-sm min-w-[32px] min-h-[32px] flex items-center justify-center"
+                            aria-label="Increase quantity"
                           >
-                            +
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                              <rect x="4" y="9" width="12" height="2" />
+                              <rect x="9" y="4" width="2" height="12" />
+                            </svg>
                           </button>
                         </div>
                       </div>
@@ -175,9 +197,12 @@ const CartMobileMenu = ({ isOpen, onClose }) => {
                       <div className="text-white font-semibold text-sm">₹{item.subtotal.toLocaleString()}</div>
                       <button 
                         onClick={() => removeItem(item.id)}
-                        className="text-[#C5A880] hover:text-white transition-colors duration-200 text-xs underline min-h-[32px] flex items-center"
+                        className="text-[#C5A880] hover:text-white transition-colors duration-200 text-xs underline min-h-[32px] flex items-center gap-1 group"
                       >
-                        Remove
+                        <svg className="w-3 h-3 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        <span>Remove</span>
                       </button>
                     </div>
                   </div>
@@ -192,24 +217,39 @@ const CartMobileMenu = ({ isOpen, onClose }) => {
               {/* Summary */}
               <div className="p-4 space-y-2">
                 <div className="flex justify-between text-gray-300 text-sm">
-                  <span>Subtotal</span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4h14v2H3V4zm0 4h14v2H3V8zm0 4h14v2H3v-2z"/></svg>
+                    <span>Subtotal</span>
+                  </span>
                   <span>₹{subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-green-400 text-sm">
-                  <span>Discount</span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 10l7-7 7 7-7 7-7-7z"/></svg>
+                    <span>Discount</span>
+                  </span>
                   <span>-₹{discount.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-gray-300 text-sm">
-                  <span>Shipping</span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 5h9v10H3V5zm10 4h4l2 2v4h-6V9z"/></svg>
+                    <span>Shipping</span>
+                  </span>
                   <span>{shipping === 0 ? 'FREE' : `₹${shipping}`}</span>
                 </div>
                 <div className="flex justify-between text-gray-300 text-sm">
-                  <span>Tax (GST 18%)</span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3h12v2H4V3zm0 4h12v2H4V7zm0 4h8v2H4v-2z"/></svg>
+                    <span>Tax (GST 18%)</span>
+                  </span>
                   <span>₹{tax.toLocaleString()}</span>
                 </div>
                 <div className="border-t border-gray-700 pt-2">
                   <div className="flex justify-between text-white font-semibold text-base">
-                    <span>Total</span>
+                    <span className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 9h10v2H5V9zm0 4h10v2H5v-2zM5 5h10v2H5V5z"/></svg>
+                      <span>Total</span>
+                    </span>
                     <span>₹{grandTotal.toLocaleString()}</span>
                   </div>
                 </div>
@@ -222,24 +262,33 @@ const CartMobileMenu = ({ isOpen, onClose }) => {
                     onClose();
                     window.location.href = '/checkout';
                   }}
-                  className="w-full bg-[#C5A880] text-black py-3 rounded-lg font-semibold hover:bg-black hover:text-[#C5A880] hover:border hover:border-[#C5A880] transition-all duration-200 min-h-[48px]"
+                  className="w-full bg-[#C5A880] text-black py-3 rounded-lg font-semibold hover:bg-black hover:text-[#C5A880] hover:border hover:border-[#C5A880] transition-all duration-200 min-h-[48px] flex items-center justify-center gap-2"
                 >
-                  Proceed to Checkout
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                  <span>Proceed to Checkout</span>
                 </button>
                 <button 
                   onClick={() => {
                     onClose();
                     window.location.href = '/cart';
                   }}
-                  className="w-full border border-[#C5A880] text-[#C5A880] py-3 rounded-lg font-semibold hover:bg-[#C5A880] hover:text-black transition-all duration-200 min-h-[48px]"
+                  className="w-full border border-[#C5A880] text-[#C5A880] py-3 rounded-lg font-semibold hover:bg-[#C5A880] hover:text-black transition-all duration-200 min-h-[48px] flex items-center justify-center gap-2"
                 >
-                  View Full Cart
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 4h-2l-1 2H2v2h2l3.6 7.59-1.35 2.44A2 2 0 006 20h12v-2H7.42a.5.5 0 01-.44-.73L8.1 15h7.45a2 2 0 001.81-1.19L20 8H7.42l-.94-2H21V4H7z"/>
+                  </svg>
+                  <span>View Full Cart</span>
                 </button>
                 <button 
                   onClick={onClose}
-                  className="w-full text-gray-400 py-2 text-sm hover:text-[#C5A880] transition-colors duration-200"
+                  className="w-full text-gray-400 py-2 text-sm hover:text-[#C5A880] transition-colors duration-200 flex items-center justify-center gap-2"
                 >
-                  Continue Shopping
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14" />
+                  </svg>
+                  <span>Continue Shopping</span>
                 </button>
               </div>
 
